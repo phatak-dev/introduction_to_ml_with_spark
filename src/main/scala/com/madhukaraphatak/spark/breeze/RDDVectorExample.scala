@@ -32,29 +32,6 @@ object RDDVectorExample {
 
     println(scaledRDD.take(10).toList)
 
-    // multiply parititon at time
-
-   /* val scaledRDDByMatrix = vectorRDD.glom().map(value => {
-      val rows = value.length
-      val columns = value(0).length
-      val data = value.map(value => value.data)
-      //covert to matrix
-      val combineData = data.fold(Array[Double]())((acc,value) => acc ++ value)
-      val denseMatrix = new DenseMatrix[Double](rows,columns, combineData)
-      //repmat
-      val repeatedArray = ( 1 to denseMatrix.) map (value => broadcastVector.value.data)
-      val combinedArray = repeatedArray.fold(Array[Double]())((acc,value) => acc ++ value)
-      val multiplierMatrix = new DenseMatrix[Double](rows,columns,combinedArray)
-
-      denseMatrix :* multiplierMatrix
-    })
-
-
-    println(scaledRDDByMatrix.collect().toList)*/
-
-
-
-
   }
 
 
