@@ -31,8 +31,6 @@ object LinearRegressionInMLLib {
     val model  = LinearRegressionWithSGD.train(labeledPointRDD,ITERATIONS,0.001,1.0,initialVector)
     println(model.intercept+ "  "+model.weights)
 
-
-
   }
 
 }
