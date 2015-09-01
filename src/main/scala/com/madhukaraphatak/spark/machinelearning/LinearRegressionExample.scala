@@ -12,8 +12,6 @@ object LinearRegressionExample {
   def main(args: Array[String]) {
 
     val sc = new SparkContext(args(0), "SparkLR")
-    val numSlices = if (args.length > 1) args(1).toInt else 2
-
     val noOfData = 10 // Number of data points
     val D = 2 // Numer of dimensions
     val ITERATIONS = 10
