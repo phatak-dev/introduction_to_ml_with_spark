@@ -24,13 +24,24 @@ object RDDVectorExample {
     })
 
     // multiply each row by a constant vector
-    val vector = new DenseVector[Double](Array(1.0,2.0))
-    val broadcastVector = sc.broadcast(vector)
+    val constant = 5.0
+    val broadcastConstant = sc.broadcast(constant)
     val scaledRDD = vectorRDD.map(row => {
-      row :* broadcastVector.value
+      row :* broadcastConstant.value
     })
 
     println(scaledRDD.take(10).toList)
+
+    // using glom to partitionwise calculation
+
+    val scaledRDDByPartition = vectorRDD.glom().map((value:Array[DenseVector[Double]]) => {
+      val arrayValues = value.map(denseVector => denseVector.data).flatten
+      val denseMatrix = new DenseMatrix[Double](value.length,value(0).length,arrayValues)
+      denseMatrix :*= broadcastConstant.value
+      denseMatrix.toDenseVector
+    })
+
+    println(scaledRDDByPartition.take(10).toList)
 
   }
 
