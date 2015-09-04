@@ -26,12 +26,13 @@ object LinearRegressionExample {
       println("On iteration " + i)
       val cost = sc.accumulator(0.0)
       val gradient = rdd.map(dataPoint => {
-        val diff = dataPoint.x.dot(w).asInstanceOf[Double] - dataPoint.y
+        val predictedValue = (dataPoint.x.t * w) //dot product h(x)
+        val diff = predictedValue - dataPoint.y // h(x)- y
         val costForRow = diff * diff
         //fromBreeze(gradient)
         cost += costForRow
         val diffVector = new DenseVector(Array.fill[Double](D)(diff))
-        val gradient = dataPoint.x :* diffVector
+        val gradient = dataPoint.x :* diffVector //   x * ( h(x) - y )
         gradient
       }).reduce(
           (v1, v2) => v1 :+ v2)
